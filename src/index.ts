@@ -1,7 +1,8 @@
 import { time } from 'console'
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import usersRouter from './routes/users.routes'
 import DatabaseService from './services/database.services'
+import { defaultErrorHandler } from './middlewares/error.middlewares'
 const app = express()
 app.use(express.json())
 const PORT = 3000
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 
 app.use('/users', usersRouter)
 // localhost: 3000/users/tweets
+app.use(defaultErrorHandler)
 
 app.listen(PORT, () => {
   console.log(`Server đang chạy trên port ${PORT}`)
